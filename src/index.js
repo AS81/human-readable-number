@@ -1,40 +1,40 @@
 module.exports = function toReadable(number) {
     const numbersUpto20 = [
         "zero",
-        "one",
-        "two",
-        "three",
-        "four",
-        "five",
-        "six",
-        "seven",
-        "eight",
-        "nine",
-        "ten",
-        "eleven",
-        "twelve",
-        "thirteen",
-        "fourteen",
-        "fifteen",
-        "sixteen",
-        "seventeen",
-        "eighteen",
-        "nineteen",
+        " one",
+        " two",
+        " three",
+        " four",
+        " five",
+        " six",
+        " seven",
+        " eight",
+        " nine",
+        " ten",
+        " eleven",
+        " twelve",
+        " thirteen",
+        " fourteen",
+        " fifteen",
+        " sixteen",
+        " seventeen",
+        " eighteen",
+        " nineteen",
     ];
     const dozens = [
         "",
         "",
-        "twenty",
-        "thirty",
-        "forty",
-        "fifty",
-        "sixty",
-        "seventy",
-        "eighty",
-        "ninety",
+        " twenty",
+        " thirty",
+        " forty",
+        " fifty",
+        " sixty",
+        " seventy",
+        " eighty",
+        " ninety",
     ];
 
-    const hundred = "hundred";
+    const hundred = " hundred";
     let humanReadableNumber = (humanReadableNumberDozens = "");
 
     function humanReadableDozens(number) {
@@ -42,7 +42,7 @@ module.exports = function toReadable(number) {
         number % 10 === 0
             ? (humanReadableNumberDozens = dozens[~~(number / 10)])
             : (humanReadableNumberDozens =
-                  dozens[~~(number / 10)] + " " + numbersUpto20[number % 10]);
+                  dozens[~~(number / 10)] + numbersUpto20[number % 10]);
         console.log(
             `end func human with number    ${number} :    ${humanReadableNumberDozens}`
         );
@@ -62,16 +62,13 @@ module.exports = function toReadable(number) {
 
         // console.log(`start switch`);
         number % 100 === 0
-            ? (humanReadableNumber =
-                  numbersUpto20[~~(number / 100)] + " " + hundred)
+            ? (humanReadableNumber = numbersUpto20[~~(number / 100)] + hundred)
             : (humanReadableNumber =
                   numbersUpto20[~~(number / 100)] +
-                  " " +
                   hundred +
-                  " " +
                   humanReadableDozens(number % 100));
         console.log(`nRN-1: ${humanReadableNumber}`);
     }
     console.log(`nRN: ${humanReadableNumber}`);
-    return humanReadableNumber;
+    return humanReadableNumber.trim();
 };
