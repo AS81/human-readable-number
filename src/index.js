@@ -22,9 +22,11 @@ module.exports = function toReadable(number) {
         "nineteen",
     ];
     const dozens = [
+        "",
+        "",
         "twenty",
         "thirty",
-        "fourty",
+        "forty",
         "fifty",
         "sixty",
         "seventy",
@@ -33,34 +35,42 @@ module.exports = function toReadable(number) {
     ];
 
     const hundred = "hundred";
-    let humanReadableNumber = "Please, input number in range from 0 up to 999";
+    let humanReadableNumber = (humanReadableNumberDozens = "");
 
     function humanReadableDozens(number) {
+        console.log(`start function human witn number   ${number}`);
         number % 10 === 0
-            ? (humanReadableNumber = dozens[number / 10])
-            : (humanReadableNumber =
-                  dozens[number / 10] + " " + numbersUpto20[number % 10]);
+            ? (humanReadableNumberDozens = dozens[~~(number / 10)])
+            : (humanReadableNumberDozens =
+                  dozens[~~(number / 10)] + " " + numbersUpto20[number % 10]);
+        console.log(
+            `end func human with number    ${number} :    ${humanReadableNumberDozens}`
+        );
+        return humanReadableNumberDozens;
     }
-    console.log(`Before switch`);
-    switch (true) {
-        case 0 <= number <= 19: //switch(number) -> case 0-19: --- does not work...
-            console.log(`start switch`);
-            humanReadableNumber = numbersUpto20[number];
-            break;
-        case 20 <= number <= 99:
-            humanReadableDozens(number);
-            break;
-        case 100 <= number <= 999:
-            console.log(`start switch`);
-            number % 100 === 0
-                ? (humanReadableNumber = dozens[number / 100] + " " + hundred)
-                : (humanReadableNumber =
-                      dozens[number / 100] +
-                      " " +
-                      hundred +
-                      " " +
-                      humanReadableDozens(number % 100));
-            console.log(`nRN-1: ${humanReadableNumber}`);
+
+    if (number < 20) {
+        //switch(number) -> case 0-19: --- does not work...
+        console.log(` ${number}  less then 20`);
+        humanReadableNumber = numbersUpto20[number];
+    } else if (number < 100) {
+        console.log(` ${number}  less then 100`);
+
+        humanReadableNumber = humanReadableDozens(number);
+    } else if (number < 1000) {
+        console.log(` ${number}  less then 1000`);
+
+        // console.log(`start switch`);
+        number % 100 === 0
+            ? (humanReadableNumber =
+                  numbersUpto20[~~(number / 100)] + " " + hundred)
+            : (humanReadableNumber =
+                  numbersUpto20[~~(number / 100)] +
+                  " " +
+                  hundred +
+                  " " +
+                  humanReadableDozens(number % 100));
+        console.log(`nRN-1: ${humanReadableNumber}`);
     }
     console.log(`nRN: ${humanReadableNumber}`);
     return humanReadableNumber;
