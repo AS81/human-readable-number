@@ -38,37 +38,29 @@ module.exports = function toReadable(number) {
     let humanReadableNumber = (humanReadableNumberDozens = "");
 
     function humanReadableDozens(number) {
-        console.log(`start function human witn number   ${number}`);
         number % 10 === 0
-            ? (humanReadableNumberDozens = dozens[~~(number / 10)])
-            : (humanReadableNumberDozens =
+            ? (humanReadableNumber = dozens[~~(number / 10)])
+            : (humanReadableNumber =
                   dozens[~~(number / 10)] + numbersUpto20[number % 10]);
-        console.log(
-            `end func human with number    ${number} :    ${humanReadableNumberDozens}`
-        );
-        return humanReadableNumberDozens;
+        return humanReadableNumber;
     }
 
-    if (number < 20) {
-        //switch(number) -> case 0-19: --- does not work...
-        console.log(` ${number}  less then 20`);
-        humanReadableNumber = numbersUpto20[number];
-    } else if (number < 100) {
-        console.log(` ${number}  less then 100`);
+    function humanReadableUpto100(number) {
+        number < 20
+            ? (humanReadableNumber = numbersUpto20[number])
+            : (humanReadableNumber = humanReadableDozens(number));
+        return humanReadableNumber;
+    }
 
-        humanReadableNumber = humanReadableDozens(number);
+    if (number < 100) {
+        humanReadableUpto100(number);
     } else if (number < 1000) {
-        console.log(` ${number}  less then 1000`);
-
-        // console.log(`start switch`);
         number % 100 === 0
             ? (humanReadableNumber = numbersUpto20[~~(number / 100)] + hundred)
             : (humanReadableNumber =
                   numbersUpto20[~~(number / 100)] +
                   hundred +
-                  humanReadableDozens(number % 100));
-        console.log(`nRN-1: ${humanReadableNumber}`);
-    }
-    console.log(`nRN: ${humanReadableNumber}`);
+                  humanReadableUpto100(number % 100));
+    } else return "Please, give a number in the range 0-999.";
     return humanReadableNumber.trim();
 };
